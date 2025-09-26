@@ -3,9 +3,10 @@ import Credentials from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
 
 export const NextOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
-    // error: "/"
+    error: "/login",
   },
   providers: [
     Credentials({
@@ -15,30 +16,45 @@ export const NextOptions: NextAuthOptions = {
         password: {},
       },
       async authorize(credentials) {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/signin`,
-          {
-            method: "post",
-            body: JSON.stringify({
-              email: credentials?.email,
-              password: credentials?.password,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            return null;
           }
-        );
-        const data = await res.json();
-        if (data.message == "success") {
-          const decodedToken: { id: string } = jwtDecode(data.token);
-          // console.log(data.user);
-          return {
-            id: decodedToken.id,
-            userData: data.user,
-            tokenData: data.token,
-          };
-        } else {
-          throw new Error(data.message);
+
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/signin`,
+            {
+              method: "post",
+              body: JSON.stringify({
+                email: credentials.email,
+                password: credentials.password,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!res.ok) {
+            console.error("API request failed:", res.status, res.statusText);
+            return null;
+          }
+
+          const data = await res.json();
+          if (data.message === "success") {
+            const decodedToken: { id: string } = jwtDecode(data.token);
+            return {
+              id: decodedToken.id,
+              userData: data.user,
+              tokenData: data.token,
+            };
+          } else {
+            console.error("Authentication failed:", data.message);
+            return null;
+          }
+        } catch (error) {
+          console.error("Authorization error:", error);
+          return null;
         }
       },
     }),

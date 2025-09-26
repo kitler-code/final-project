@@ -1,3 +1,4 @@
+import { category } from "@/types/category.type";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,14 +16,14 @@ async function getCategories() {
 
 export default async function CategoryPage() {
   const data = await getCategories();
-  const categories = data.data;
+  const Categories: category[] = data.data;
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Categories</h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        {categories.map((cat: any) => (
+        {Categories.map((cat: category) => (
           <Link
             href={`/category/${cat._id}`}
             key={cat._id}

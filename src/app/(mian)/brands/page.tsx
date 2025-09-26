@@ -1,16 +1,16 @@
 import Image from "next/image";
 import { getBrands } from "@/app/actions/getBrands";
-
+import { Brand } from "@/types/brand.type";
 export default async function BrandsPage() {
   const data = await getBrands();
-  const brands = data.data;
+  const brands: Brand[] = data.data;
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Brands</h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        {brands.map((brand: any) => (
+        {brands.map((brand: Brand) => (
           <div
             key={brand._id}
             className="flex flex-col items-center bg-white shadow rounded-xl p-4 hover:shadow-lg transition"

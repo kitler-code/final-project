@@ -1,7 +1,6 @@
 "use server";
 import { getUserToken } from "@/getUserToken";
 import { CartData } from "@/types/cart.type";
-import { assert } from "console";
 
 export async function getCartData() {
   const token = await getUserToken();
@@ -21,7 +20,7 @@ export async function getCartData() {
 }
 
 export async function AddProductToCart(id: string) {
-  const token: any = await getUserToken();
+  const token = await getUserToken();
   if (!token) {
     throw new Error("token Error");
   }
@@ -43,7 +42,7 @@ export async function AddProductToCart(id: string) {
 }
 
 export async function removeProduct(id: string) {
-  const token: any = await getUserToken();
+  const token = await getUserToken();
   if (!token) {
     throw new Error("token Error");
   }
@@ -61,7 +60,7 @@ export async function removeProduct(id: string) {
 }
 
 export async function clearCart() {
-  const token: any = await getUserToken();
+  const token = await getUserToken();
   if (!token) {
     throw new Error("token Error");
   }

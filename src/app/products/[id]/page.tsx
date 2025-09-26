@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { product } from "@/types/products.type";
 import ProductCard from "@/app/_Components/ProductCard/ProductCard";
 
-export default function page() {
+export default function ProductPage() {
   const { id } = useParams(); // get product id from URL
   const [product, setProduct] = useState<product | null>(null);
 
@@ -15,7 +15,7 @@ export default function page() {
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/${id}`
         );
         const data = await res.json();
-        setProduct(data.data); // ✅ adjust depending on your API response
+        setProduct(data.data);
       } catch (error) {
         console.error("Failed to fetch product", error);
       }

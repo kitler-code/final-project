@@ -1,6 +1,6 @@
 "use client";
 import { AddProductToCart } from "@/CartAction/CartAction";
-import { Button } from "@/comvponents/ui/button";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export default function AddCartBtn({ id }: { id: string }) {

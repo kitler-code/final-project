@@ -5,7 +5,7 @@ import {
   removeProduct,
   updateProductQuantity,
 } from "@/CartAction/CartAction";
-import { Button } from "@/comvponents/ui/button";
+import { Button } from "@/components/ui/button";
 import { cart, CartData } from "@/types/cart.type";
 import React, { useEffect, useState } from "react";
 import { product } from "@/types/products.type";

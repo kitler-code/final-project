@@ -1,7 +1,7 @@
 import React from "react";
 import { productItem } from "@/types/productDetaitls.type";
 import Image from "next/image";
-import { Button } from "@/comvponents/ui/button";
+import { Button } from "@/components/ui/button";
 import ProductSlider from "../ProductSlider/ProductSlider";
 import AddCartBtn from "../ProductCard/AddCartBtn";
 // import { ProductDetailsCard } from '@/app/_Components/ProductDetailsCard/ProductDetailsCard';

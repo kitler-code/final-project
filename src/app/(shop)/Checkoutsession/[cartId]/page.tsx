@@ -7,12 +7,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/comvponents/ui/form";
+} from "@/components/ui/form";
 import { useParams } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Input } from "@/comvponents/ui/input";
-import { Button } from "@/comvponents/ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { checkoutPayment } from "@/OrderAction/OrderAction";
 
 export default function Checkoutsession() {

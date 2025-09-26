@@ -22,7 +22,7 @@ export function Navbar() {
     { path: "/brands", content: "Brands", protected: false },
     { path: "/cart", content: "Cart", protected: true },
     { path: "/wishlist", content: "Wishlist", protected: false },
-    { path: "/orders", content: "Orders", protected: true },
+    { path: "/allorders", content: "Orders", protected: true },
   ];
   const MenuAuthItems: { path: string; content: string }[] = [
     { path: "/login", content: "Login" },

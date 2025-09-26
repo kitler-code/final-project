@@ -3,6 +3,7 @@ import { productItem } from "@/types/productDetaitls.type";
 import Image from "next/image";
 import { Button } from "@/comvponents/ui/button";
 import ProductSlider from "../ProductSlider/ProductSlider";
+import AddCartBtn from "../ProductCard/AddCartBtn";
 // import { ProductDetailsCard } from '@/app/_Components/ProductDetailsCard/ProductDetailsCard';
 export default function ProductDetailsCard({
   product,
@@ -37,9 +38,7 @@ export default function ProductDetailsCard({
               {ratingsAverage}
             </span>
           </div>
-          <Button className="rounded-2xl bg-main w-full mt-5">
-            Add To Cart
-          </Button>
+          <AddCartBtn id={_id} />
         </div>
       </div>
     </div>

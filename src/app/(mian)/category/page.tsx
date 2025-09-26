@@ -1,8 +1,44 @@
-import React from "react";
-import { getServerSession } from "next-auth";
-import { NextOptions } from "@/app/api/auth/[...nextauth]/route";
+import Image from "next/image";
+import Link from "next/link";
 
-export default async function page() {
-  const x = await getServerSession(NextOptions);
-  return <div>page</div>;
+async function getCategories() {
+  const res = await fetch("https://ecommerce.routemisr.com/api/v1/categories", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  return res.json();
+}
+
+export default async function CategoryPage() {
+  const data = await getCategories();
+  const categories = data.data;
+
+  return (
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Categories</h1>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        {categories.map((cat: any) => (
+          <Link
+            href={`/category/${cat._id}`}
+            key={cat._id}
+            className="flex flex-col items-center bg-white shadow rounded-xl p-4 hover:shadow-lg transition"
+          >
+            <Image
+              src={cat.image}
+              alt={cat.name}
+              width={120}
+              height={120}
+              className="object-contain"
+            />
+            <p className="mt-2 text-center font-medium">{cat.name}</p>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 }

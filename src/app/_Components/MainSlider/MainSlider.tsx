@@ -53,7 +53,7 @@ export default function MainSlider() {
             src="/images/slider-image-2.jpeg"
             alt="img2"
             width={800}
-            height={400}
+            height={100}
             className="object-contain mx-auto"
           />
         </div>
@@ -62,7 +62,7 @@ export default function MainSlider() {
             src="/images/slider-image-2.jpeg"
             alt="img2"
             width={800}
-            height={400}
+            height={100}
             className="object-contain mx-auto"
           />
         </div>

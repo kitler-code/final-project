@@ -12,6 +12,7 @@ import Image from "next/image";
 import { product } from "@/types/products.type";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import AddCartBtn from "./AddCartBtn";
 export default function ProductCard({ product }: { product: product }) {
   const {
     imageCover,
@@ -45,10 +46,10 @@ export default function ProductCard({ product }: { product: product }) {
           </div>
           <p>Card Content</p>
         </CardContent>
-        <CardFooter>
-          <Button className="rounded-2xl bg-main w-full">Add To Cart</Button>
-        </CardFooter>
       </Link>
+      <CardFooter>
+        <AddCartBtn id={_id} />
+      </CardFooter>
     </Card>
   );
 }

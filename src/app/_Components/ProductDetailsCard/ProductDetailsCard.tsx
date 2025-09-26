@@ -20,6 +20,7 @@ export default function ProductDetailsCard({
     description,
     images,
   } = product;
+
   return (
     <div className="w-3/4 m-auto">
       <div className="grid grid-cols-12 justify-between items-center">

@@ -16,6 +16,7 @@ import { signOut, useSession } from "next-auth/react";
 
 export function Navbar() {
   const { data, status } = useSession();
+
   const MenuItems: { path: string; content: string; protected: boolean }[] = [
     { path: "/products", content: "Products", protected: false },
     { path: "/category", content: "Category", protected: false },
@@ -24,6 +25,7 @@ export function Navbar() {
     { path: "/wishlist", content: "Wishlist", protected: false },
     { path: "/allorders", content: "Orders", protected: true },
   ];
+
   const MenuAuthItems: { path: string; content: string }[] = [
     { path: "/login", content: "Login" },
     { path: "/register", content: "Register" },
@@ -34,7 +36,7 @@ export function Navbar() {
       callbackUrl: "/login",
     });
   }
-  // console.log(data, status);
+
   return (
     <NavigationMenu
       viewport={false}
@@ -56,7 +58,7 @@ export function Navbar() {
 
         {MenuItems.map((item) => (
           <NavigationMenuItem key={item.path}>
-            {item.protected && status == "authenticated" && (
+            {item.protected && status === "authenticated" && (
               <NavigationMenuLink
                 asChild
                 className={navigationMenuTriggerStyle()}
@@ -75,15 +77,18 @@ export function Navbar() {
           </NavigationMenuItem>
         ))}
       </NavigationMenuList>
+
       <NavigationMenuList>
-        {status == "authenticated" ? (
+        {status === "authenticated" ? (
           <>
             <NavigationMenuItem>
               <NavigationMenuLink
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <span className="bg-red-400 p-5">hello {data?.user.name}</span>
+                <span className="px-4 py-2 bg-green-500 text-white rounded-md">
+                  Hello, {data?.user?.name}
+                </span>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
@@ -92,7 +97,12 @@ export function Navbar() {
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <button onClick={logout}>Logout</button>
+                <button
+                  onClick={logout}
+                  className="px-4 py-2 bg-red-500 text-white rounded-md"
+                >
+                  Logout
+                </button>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </>

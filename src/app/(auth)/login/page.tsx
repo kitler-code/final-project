@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Spinner } from "@/components/ui/spinner";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,37 +42,62 @@ export default function Login() {
     resolver: zodResolver(SchemeLogin),
   });
 
-  async function handleLogin(values: z.infer<typeof SchemeLogin>) {
-    setIsLoading(true);
+  // try {
+  //   const res = await fetch(
+  //     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/signin`,
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify(values),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Accept: "application/json",
+  //       },
+  //     }
+  //   );
+
+  //   const data = await res.json();
+
+  //   if (res.ok && data.token) {
+  //     localStorage.setItem("authToken", data.token);
+  //     if (data.user) {
+  //       localStorage.setItem("user", JSON.stringify(data.user));
+  //     }
+
+  //     toast.success("Login successful!", { position: "top-center" });
+  //     router.push("/");
+  //   } else {
+  //     toast.error(data.message || "Login failed", { position: "top-center" });
+  //   }
+  // } catch (error) {
+  //   toast.error("An error occurred during login", { position: "top-center" });
+  // } finally {
+  //   setIsLoading(false);
+  // }
+
+  const LoginSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+  });
+
+  type LoginValues = z.infer<typeof LoginSchema>;
+
+  async function handleLogin(values: LoginValues) {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/signin`,
-        {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
 
-      const data = await res.json();
-
-      if (res.ok && data.token) {
-        localStorage.setItem("authToken", data.token);
-        if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-        }
-
-        toast.success("Login successful!", { position: "top-center" });
-        router.push("/");
+      if (res?.error) {
+        toast.error(res.error);
       } else {
-        toast.error(data.message || "Login failed", { position: "top-center" });
+        toast.success("Login successful!");
+        router.push("/");
       }
-    } catch (error) {
-      toast.error("An error occurred during login", { position: "top-center" });
-    } finally {
-      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong");
     }
   }
 
@@ -301,4 +327,3 @@ export default function Login() {
 //       </div>
 //     </div>
 //   );
-// }

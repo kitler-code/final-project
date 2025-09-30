@@ -1,24 +1,18 @@
 "use server";
 
-import { getUserToken } from "@/getUserToken";
-
 export async function getBrands() {
-  const token = await getUserToken();
+  try {
+    const res = await fetch("https://ecommerce.routemisr.com/api/v1/brands", {
+      cache: "no-store", // avoid stale data
+    });
 
-  if (!token) {
-    throw new Error("No token found");
+    if (!res.ok) {
+      throw new Error("Failed to fetch brands");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching brands:", error);
+    return { data: [] }; // fallback
   }
-
-  const res = await fetch("https://ecommerce.routemisr.com/api/v1/brands", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch brands");
-  }
-
-  return res.json();
 }

@@ -17,7 +17,7 @@ export async function checkoutPayment(
         }),
         headers: {
           "Content-Type": "application/json",
-          token: token,
+          token: String(token),
         },
       }
     );

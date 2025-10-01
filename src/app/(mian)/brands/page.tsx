@@ -1,3 +1,4 @@
+"use server";
 import Image from "next/image";
 import { getBrands } from "@/app/actions/getBrands";
 import { Brand } from "@/types/brand.type";

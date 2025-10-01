@@ -11,7 +11,7 @@ export async function getCartData() {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/cart`,
     {
       headers: {
-        token: token,
+        token: String(token),
       },
     }
   );
@@ -32,7 +32,7 @@ export async function AddProductToCart(id: string) {
         productId: id,
       }),
       headers: {
-        token: token,
+        token: String(token),
         "content-type": "application/json",
       },
     }
@@ -51,7 +51,7 @@ export async function removeProduct(id: string) {
     {
       method: "delete",
       headers: {
-        token: token,
+        token: String(token),
       },
     }
   );
@@ -69,7 +69,7 @@ export async function clearCart() {
     {
       method: "delete",
       headers: {
-        token: token,
+        token: String(token),
       },
     }
   );
@@ -90,8 +90,9 @@ export async function updateProductQuantity(id: string, count: number) {
         count: count,
       }),
       headers: {
+        token: String(token),
+
         "Content-Type": "application/json",
-        token: token,
       },
     }
   );

@@ -1,10 +1,14 @@
-"use server";
+"use client";
 import Image from "next/image";
 import { getBrands } from "@/app/actions/getBrands";
 import { Brand } from "@/types/brand.type";
-export default async function BrandsPage() {
-  const data = await getBrands();
-  const brands: Brand[] = data.data;
+import { useEffect, useState } from "react";
+export default function BrandsPage() {
+  const [brands, setBrands] = useState<any[]>([]);
+
+  useEffect(() => {
+    getBrands().then((res) => setBrands(res.data));
+  }, []);
 
   return (
     <div className="container mx-auto p-6">

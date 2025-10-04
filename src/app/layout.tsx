@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Encode_Sans, Encode_Sans_SC } from "next/font/google";
+import { Encode_Sans } from "next/font/google";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Navbar } from "./_Components/Navbar/Navbar";
-import Footer from "./_Components/Footer/Footer";
+import { Navbar } from "./_Component/Navbar/Navbar";
+import Footer from "./_Component/Footer/Footer";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { Toaster } from "@/components/ui/sonner";
-import UserProvider from "@/UserProvider";
 
 const Encode_SanFont = Encode_Sans({
   subsets: ["latin"],
@@ -27,12 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${Encode_SanFont.className}`}>
-        <UserProvider>
-          <Navbar />
-          <main className="p-5">{children}</main>
-          <Toaster />
-          <Footer />
-        </UserProvider>
+        <Navbar />
+        <main className="p-5">{children}</main>
+        <Toaster />
+        <Footer />
       </body>
     </html>
   );

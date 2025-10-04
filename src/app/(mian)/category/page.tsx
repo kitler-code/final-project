@@ -3,9 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 async function getCategories() {
-  const res = await fetch("https://ecommerce.routemisr.com/api/v1/categories", {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch categories");

@@ -132,7 +132,7 @@ export default function ForgetPassword() {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/forgotPasswords`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/forgotPasswords`,
         {
           method: "POST",
           body: JSON.stringify(values),

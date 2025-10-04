@@ -2,9 +2,12 @@
 
 export async function getBrands() {
   try {
-    const res = await fetch("https://ecommerce.routemisr.com/api/v1/brands", {
-      cache: "no-store", // avoid stale data
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/brands`,
+      {
+        cache: "no-store", // avoid stale data
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch brands");

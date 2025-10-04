@@ -1,13 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
-
 export const NextOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/login",
-    error: "/login",
-  },
   providers: [
     Credentials({
       name: "credentials",
@@ -15,42 +9,34 @@ export const NextOptions: NextAuthOptions = {
         email: {},
         password: {},
       },
-      async authorize(credentials) {
+      async authorize(Credentials) {
         try {
-          if (!credentials?.email || !credentials?.password) {
-            return null;
-          }
-
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/signin`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signin`,
             {
               method: "post",
               body: JSON.stringify({
-                email: credentials.email,
-                password: credentials.password,
+                email: Credentials?.email,
+                password: Credentials?.password,
               }),
               headers: {
-                "Content-Type": "application/json",
+                "content-type": "application/json",
               },
             }
           );
-
-          if (!res.ok) {
-            console.error("API request failed:", res.status, res.statusText);
-            return null;
-          }
-
           const data = await res.json();
-          if (data.message === "success") {
-            const decodedToken: { id: string } = jwtDecode(data.token);
+          console.log("data", data);
+
+          if (data.message == "success") {
+            const decodeToken: { id: string } = jwtDecode(data.token);
+            console.log(decodeToken);
             return {
-              id: decodedToken.id,
-              userData: data.user,
-              tokenData: data.token,
-            };
+              id: "",
+              user: data.user,
+              token: data.token,
+            } as any;
           } else {
-            console.error("Authentication failed:", data.message);
-            return null;
+            throw new Error(data.message);
           }
         } catch (error) {
           console.error("Authorization error:", error);
@@ -59,19 +45,6 @@ export const NextOptions: NextAuthOptions = {
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.idToken = user.tokenData;
-        token.user = user.userData;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user = token.user;
-      return session;
-    },
-  },
 };
 
 const handler = NextAuth(NextOptions);

@@ -54,7 +54,7 @@ export default function ResetCode() {
       headers.append("User-Agent", "Your-App/1.0.0");
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/verifyResetCode`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/verifyResetCode`,
         {
           method: "POST",
           body: JSON.stringify({ resetCode: values.resetCode }),

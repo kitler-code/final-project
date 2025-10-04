@@ -46,7 +46,7 @@ export default function BrandsPage() {
     async function fetchBrands() {
       try {
         const res = await fetch(
-          "https://ecommerce.routemisr.com/api/v1/brands"
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/brands`
         );
         if (!res.ok) throw new Error("Failed to fetch brands");
         const data = await res.json();

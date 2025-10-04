@@ -1,11 +1,13 @@
 import { product, ProductData } from "@/types/products.type";
-import ProductCard from "./_Components/ProductCard/ProductCard";
-import MainSlider from "./_Components/MainSlider/MainSlider";
+import ProductCard from "./_Component/ProductCard/ProductCard";
+import MainSlider from "./_Component/MainSlider/MainSlider";
 import { Suspense } from "react";
-import { HomeLoading } from "./_Components/HomeLoading/HomeLoading";
+import { HomeLoading } from "./_Component/HomeLoading/HomeLoading";
 
 export default async function Home() {
-  const res = await fetch(`https://ecommerce.routemisr.com/api/v1/products`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products`
+  );
   const data: ProductData = await res.json();
   const productLitst: product[] = data.data;
   return (

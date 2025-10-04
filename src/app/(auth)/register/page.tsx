@@ -66,7 +66,7 @@ export default function Register() {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/signup`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signup`,
         {
           method: "POST",
           body: JSON.stringify(values),
@@ -80,17 +80,17 @@ export default function Register() {
 
       if (res.ok && data.message === "success") {
         toast.success("Account created successfully!", {
-          position: "top-center",
+          position: "bottom-right",
         });
         router.push("/login");
       } else {
         toast.error(data.message || "Registration failed", {
-          position: "top-center",
+          position: "bottom-right",
         });
       }
     } catch (error) {
       toast.error("An error occurred during registration", {
-        position: "top-center",
+        position: "bottom-right",
       });
     } finally {
       setIsLoading(false);

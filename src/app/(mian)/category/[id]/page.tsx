@@ -2,7 +2,7 @@ import { category } from "@/types/category.type";
 
 async function getSubCategories(categoryId: string) {
   const res = await fetch(
-    `https://ecommerce.routemisr.com/api/v1/categories/${categoryId}/subcategories`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories/${categoryId}/subcategories`,
     { cache: "no-store" }
   );
 

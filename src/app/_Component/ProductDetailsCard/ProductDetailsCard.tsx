@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import ProductSlider from "../ProductSlider/ProductSlider";
 import AddCartBtn from "../ProductCard/AddCartBtn";
-// import { ProductDetailsCard } from '@/app/_Components/ProductDetailsCard/ProductDetailsCard';
 export default function ProductDetailsCard({
   product,
 }: {
@@ -25,7 +24,13 @@ export default function ProductDetailsCard({
     <div className="w-3/4 m-auto">
       <div className="grid grid-cols-12 justify-between items-center">
         <div className="col-span-3">
-          {/* <Image src={imageCover} alt={title} width={200} height={100} className="w-full h-72 object-cover rounded-2xl" /> */}
+          {/* <Image
+            src={imageCover}
+            alt={title}
+            width={200}
+            height={100}
+            className="w-full h-72 object-cover rounded-2xl"
+          /> */}
           <ProductSlider images={images} />
         </div>
         <div className="col-span-7 mx-5">

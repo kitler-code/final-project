@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { jwtDecode } from "jwt-Decode" ;
+import { jwtDecode } from "jwt-decode" ;
 export const NextOptions: NextAuthOptions = {
   providers: [
     Credentials({

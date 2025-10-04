@@ -36,58 +36,61 @@ export function Navbar() {
   }
 
   return (
-    <NavigationMenu
-      viewport={false}
-      className="max-w-full justify-between shadow-2xl p-5"
-    >
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={"/"}>
-              <Image
-                src={"/images/freshcart-logo.svg"}
-                alt="logo"
-                width={100}
-                height={100}
-              />
-            </Link>
+<NavigationMenu
+  viewport={false}
+  className="max-w-full justify-between shadow-2xl p-5 flex"
+>
+  <div className="flex items-center gap-4">
+    <NavigationMenuList>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+          <Link href={"/"}>
+            <Image
+              src={"/images/freshcart-logo.svg"}
+              alt="logo"
+              width={100}
+              height={100}
+            />
+          </Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+
+      {MenuItems.map((item) => (
+        <NavigationMenuItem key={item.path}>
+          <NavigationMenuLink
+            asChild
+            className={navigationMenuTriggerStyle()}
+          >
+            <Link href={item.path}>{item.content}</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+      ))}
+    </NavigationMenuList>
+  </div>
 
-        {MenuItems.map((item) => {
-          return (
-            <NavigationMenuItem key={item.path}>
-              <NavigationMenuLink
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link href={item.path}>{item.content}</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          );
-        })}
-
-        {MenuAuthItems.map((item) => {
-          return (
-            <NavigationMenuItem key={item.path}>
-              <NavigationMenuLink
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link href={item.path}>{item.content}</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          );
-        })}
-
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={"/"}>
-              <span>Loguot</span>
-            </Link>
+  <div className="flex items-center gap-4">
+    <NavigationMenuList>
+      {MenuAuthItems.map((item) => (
+        <NavigationMenuItem key={item.path}>
+          <NavigationMenuLink
+            asChild
+            className={navigationMenuTriggerStyle()}
+          >
+            <Link href={item.path}>{item.content}</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+      ))}
+
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+          <Link href={"/"}>
+            <span>Logout</span>
+          </Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+    </NavigationMenuList>
+  </div>
+</NavigationMenu>
+
   );
 }

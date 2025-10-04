@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-Decode" ;
 export const NextOptions: NextAuthOptions = {
   providers: [
     Credentials({
@@ -34,7 +34,7 @@ export const NextOptions: NextAuthOptions = {
               id: "",
               user: data.user,
               token: data.token,
-            } as any;
+            } 
           } else {
             throw new Error(data.message);
           }

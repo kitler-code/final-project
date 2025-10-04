@@ -1,3 +1,11 @@
+import React from 'react'
+
+export default function page() {
+  return (
+    <div>page</div>
+  )
+}
+
 // "use client";
 // import Image from "next/image";
 // import { getBrands } from "@/app/actions/getBrands";

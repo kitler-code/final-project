@@ -1,3 +1,11 @@
+import React from 'react'
+
+export default function page() {
+  return (
+    <div>page</div>
+  )
+}
+
 // import { category } from "@/types/category.type";
 // import Image from "next/image";
 // import Link from "next/link";

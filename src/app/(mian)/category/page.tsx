@@ -25,7 +25,8 @@ export default function page() {
 //   return res.json();
 // }
 
-// export default async function CategoryPage() {
+// export default async function Category
+// }"?ge() {
 //   const data = await getCategories();
 //   const Categories: category[] = data.data;
 

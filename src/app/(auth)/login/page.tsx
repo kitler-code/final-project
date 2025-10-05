@@ -43,43 +43,10 @@ export default function Login() {
 
   async function handleLogin(values: z.infer<typeof SchemeLogin>) {
     setIsLoading(true);
-    signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: true,
-      callbackUrl: "/",
-    });
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signin`,
-        {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const data = await res.json();
-
-      if (res.ok && data.message === "success") {
-        toast.success("Logged in!", {
-          position: "bottom-right",
-        });
-        router.push("/");
-      } else {
-        toast.error(data.message || "Login failed", {
-          position: "bottom-right",
-        });
-      }
-    } catch (error) {
-      toast.error("An error occurred during login", {
-        position: "bottom-right",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+   signIn('credentials',{
+    email: values.email,
+    password: values.password
+   })
   }
 
   return (

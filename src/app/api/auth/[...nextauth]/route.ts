@@ -13,7 +13,6 @@ export const NextOptions: NextAuthOptions = {
         password: {},
       },
       async authorize(Credentials) {
-        try {
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signin`,
             {
@@ -28,23 +27,16 @@ export const NextOptions: NextAuthOptions = {
             }
           );
           const data = await res.json();
-          console.log("data", data);
-
           if (data.message == "success") {
             const decodeToken: { id: string } = jwtDecode(data.token);
-            console.log(decodeToken);
             return {
-              id: "",
+              id: decodeToken.id,
               user: data.user,
               token: data.token,
             } 
           } else {
             throw new Error(data.message);
           }
-        } catch (error) {
-          console.error("Authorization error:", error);
-          return null;
-        }
       },
     }),
   ],

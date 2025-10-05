@@ -37,6 +37,8 @@ export default function Login() {
     defaultValues: {
       email: "",
       password: "",
+
+      
     },
     resolver: zodResolver(SchemeLogin),
   });
@@ -45,7 +47,9 @@ export default function Login() {
     setIsLoading(true);
    signIn('credentials',{
     email: values.email,
-    password: values.password
+    password: values.password,
+    redirect: true ,
+    callbackUrl: '/'
    })
   }
 

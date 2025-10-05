@@ -40,7 +40,21 @@ export const NextOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks:{
+    async jwt({token,user}){
+       if (user) {
+        token.user = user.user;
+        token.token = user.token;
+      }
+      return token
+    },
+    async session ({session,user,token}){
+      session.user = token.user
+      return session
+    }
+  }
 };
 
 const handler = NextAuth(NextOptions);
 export { handler as GET, handler as POST };
+

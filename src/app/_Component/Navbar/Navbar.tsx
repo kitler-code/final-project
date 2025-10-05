@@ -13,8 +13,11 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { signOut, useSession } from "next-auth/react";
-
+import { usePathname } from "next/navigation";
 export function Navbar() {
+  const {data, status} = useSession()
+  const pathName : string = usePathname()
+  console.log(pathName)
   const MenuItems: { path: string; content: string; protected: boolean }[] = [
     { path: "/products", content: "Products", protected: false },
     { path: "/category", content: "Category", protected: false },
@@ -38,7 +41,7 @@ export function Navbar() {
   return (
 <NavigationMenu
   viewport={false}
-  className="max-w-full justify-between shadow-2xl p-5 flex"
+  className="max-w-full justify-between shadow-2xl p-5"
 >
   <div className="flex items-center gap-4">
     <NavigationMenuList>
@@ -70,6 +73,22 @@ export function Navbar() {
 
   <div className="flex items-center gap-4">
     <NavigationMenuList>
+      {status == 'authenticated'?<>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+          <Link href={"/"}>
+            <span className=" bg-green-400 p-3 rounded-2xl" >Hello {data?.user.name}</span>
+          </Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+          <Link href={"/"}>
+            <span className=" bg-red-500 p-3 rounded" >Logout</span>
+          </Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+</>:<>
       {MenuAuthItems.map((item) => (
         <NavigationMenuItem key={item.path}>
           <NavigationMenuLink
@@ -81,13 +100,10 @@ export function Navbar() {
         </NavigationMenuItem>
       ))}
 
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-          <Link href={"/"}>
-            <span>Logout</span>
-          </Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
+</>
+}
+
+
     </NavigationMenuList>
   </div>
 </NavigationMenu>

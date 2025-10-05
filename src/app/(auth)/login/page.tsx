@@ -28,10 +28,6 @@ export default function Login() {
     password: z
       .string()
       .nonempty("Password is required")
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-        "Password must contain at least 6 characters, one uppercase letter, one lowercase letter, one number, and one special character"
-      ),
   });
   const LoginForm = useForm({
     defaultValues: {

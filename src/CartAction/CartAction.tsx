@@ -1,4 +1,4 @@
-"use server";
+"use server"
 import { getUserToken } from "@/getUserToken";
 import { CartData } from "@/types/cart.type";
 

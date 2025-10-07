@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -17,18 +17,25 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Spinner } from "@/components/ui/spinner";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Login() {
+  const { data: session, status } = useSession(); // 👈 check session state
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  // ✅ Redirect if already logged in
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/"); // redirect to home or any protected route
+    }
+  }, [status, router]);
+
   const SchemeLogin = z.object({
-    email: z.email("Invalid email address").nonempty("Email is required"),
-    password: z
-      .string()
-      .nonempty("Password is required")
+    email: z.string().email("Invalid email address").nonempty("Email is required"),
+    password: z.string().nonempty("Password is required"),
   });
+
   const LoginForm = useForm({
     defaultValues: {
       email: "",
@@ -39,12 +46,6 @@ export default function Login() {
 
   async function handleLogin(values: z.infer<typeof SchemeLogin>) {
     setIsLoading(true);
-    signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-      callbackUrl: "/",
-    });
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signin`,
@@ -60,6 +61,13 @@ export default function Login() {
       const data = await res.json();
 
       if (res.ok && data.message === "success") {
+        // ✅ Use NextAuth signIn after backend success
+        await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+        });
+
         toast.success("Logged in!", {
           position: "bottom-right",
         });
@@ -78,14 +86,25 @@ export default function Login() {
     }
   }
 
+  // ⏳ Optional loading screen while checking session
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner variant="ring" size={40} />
+      </div>
+    );
+  }
+
+  // 🚫 If logged in, don’t render the form at all
+  if (status === "authenticated") {
+    return null;
+  }
+
   return (
     <div className="w-full max-w-md mx-auto my-8 p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
       <Form {...LoginForm}>
-        <form
-          className="space-y-4"
-          onSubmit={LoginForm.handleSubmit(handleLogin)}
-        >
+        <form className="space-y-4" onSubmit={LoginForm.handleSubmit(handleLogin)}>
           <FormField
             control={LoginForm.control}
             name="email"
@@ -95,9 +114,7 @@ export default function Login() {
                 <FormControl>
                   <Input
                     className={
-                      fieldState.error
-                        ? "border-red-500 focus-visible:ring-red-500"
-                        : ""
+                      fieldState.error ? "border-red-500 focus-visible:ring-red-500" : ""
                     }
                     type="email"
                     placeholder="Enter your email"
@@ -118,9 +135,7 @@ export default function Login() {
                 <FormControl>
                   <Input
                     className={
-                      fieldState.error
-                        ? "border-red-500 focus-visible:ring-red-500"
-                        : ""
+                      fieldState.error ? "border-red-500 focus-visible:ring-red-500" : ""
                     }
                     type="password"
                     placeholder="Enter your password"
@@ -150,10 +165,7 @@ export default function Login() {
       <div className="mt-4 text-center">
         <p className="text-sm text-gray-600">
           Forget Password?{" "}
-          <Link
-            href="/forgetPassword"
-            className="text-blue-600 hover:underline"
-          >
+          <Link href="/forgetPassword" className="text-blue-600 hover:underline">
             Click here
           </Link>
         </p>

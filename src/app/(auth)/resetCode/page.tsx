@@ -25,7 +25,7 @@ export default function ResetCode() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Validation - 6 digits only
+
   const resetCodeSchema = z.object({
     resetCode: z
       .string()
@@ -45,7 +45,7 @@ export default function ResetCode() {
     setIsLoading(true);
 
     try {
-      // Create headers as in Postman
+
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
       headers.append("Accept", "*/*");
@@ -62,7 +62,7 @@ export default function ResetCode() {
         }
       );
 
-      // Check HTTP status first
+
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }

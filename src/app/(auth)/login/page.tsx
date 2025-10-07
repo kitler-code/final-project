@@ -20,14 +20,14 @@ import { Spinner } from "@/components/ui/spinner";
 import { signIn, useSession } from "next-auth/react";
 
 export default function Login() {
-  const { data: session, status } = useSession(); // 👈 check session state
+  const { data: session, status } = useSession(); 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  // ✅ Redirect if already logged in
+
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/"); // redirect to home or any protected route
+      router.push("/"); 
     }
   }, [status, router]);
 
@@ -61,7 +61,6 @@ export default function Login() {
       const data = await res.json();
 
       if (res.ok && data.message === "success") {
-        // ✅ Use NextAuth signIn after backend success
         await signIn("credentials", {
           email: values.email,
           password: values.password,
@@ -86,7 +85,7 @@ export default function Login() {
     }
   }
 
-  // ⏳ Optional loading screen while checking session
+
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -95,7 +94,7 @@ export default function Login() {
     );
   }
 
-  // 🚫 If logged in, don’t render the form at all
+
   if (status === "authenticated") {
     return null;
   }

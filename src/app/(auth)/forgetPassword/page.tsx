@@ -1,96 +1,4 @@
-// "use client";
-// import React from "react";
-// import {
-//   ControllerFieldState,
-//   ControllerRenderProps,
-//   FieldValues,
-//   useForm,
-//   UseFormStateReturn,
-// } from "react-hook-form";
-// import {
-//   Form,
-//   FormControl,
-//   FormDescription,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@/components/ui/form";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import * as z from "zod";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { toast } from "sonner";
-// import { useRouter } from "next/navigation";
-// export default function ForgetPassword() {
-//   const Route = useRouter();
-//   const SchemeForgetPassword = z.object({
-//     email: z.email("Email invalid").nonempty("Email Required"),
-//   });
 
-//   const forgetForm = useForm({
-//     defaultValues: {
-//       email: "",
-//     },
-//     resolver: zodResolver(SchemeForgetPassword),
-//   });
-//   async function handleForgetPassword(
-//     values: z.infer<typeof SchemeForgetPassword>
-//   ) {
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/forgotPasswords`,
-//       {
-//         method: "post",
-//         body: JSON.stringify(values),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-//     const data = await res.json();
-//     if (data.statusMsg == "success") {
-//       Route.push("/resetCode");
-//     } else {
-//       toast.error(data.message, { position: "top-center" });
-//     }
-//   }
-//   return (
-//     <>
-//       <div className="w-3/4 mx-auto my-5">
-//         <h1 className="text-3x my-5 ">Login</h1>
-//         <Form {...forgetForm}>
-//           <form
-//             className="space-y-3"
-//             onSubmit={forgetForm.handleSubmit(handleForgetPassword)}
-//           >
-//             <FormField
-//               control={forgetForm.control}
-//               name="email"
-//               render={({ field, fieldState }) => (
-//                 <FormItem>
-//                   <FormLabel>Enter Your email:</FormLabel>
-//                   <FormControl>
-//                     <Input
-//                       className={
-//                         fieldState.error
-//                           ? "border-red-500 focus-visible:ring-red-500"
-//                           : ""
-//                       }
-//                       type="email"
-//                       {...field}
-//                     />
-//                   </FormControl>
-//                   <FormMessage className="text-red-500" />
-//                 </FormItem>
-//               )}
-//             />
-//             <Button className="w-full bg-main">Send Email</Button>
-//           </form>
-//         </Form>
-//       </div>
-//     </>
-//   );
-// }
 "use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -102,7 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button"; // Fixed typo
+import { Button } from "@/components/ui/button"; 
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
